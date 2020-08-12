@@ -1,62 +1,69 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <conio.h>
 
-void inicializar(char jue[]);
-void muestra(char v[]);
+void inicializar(char jue[], int longitud);
+void muestra(char v[], int longitud);
 void busqueda(char pa[], char jue[], char x);
 
 
 main(){
-
-
-    char palabra[10];
-    char juego[6];
-    char x='a';
-    int c=0;
-
-    printf("Ingrese la palabra secreta: ");
-
-    do{
-        _flushall();
-        x=getch();
-        printf("");
-        palabra[c] = x;
-
-        c++;
-    }
-    while(x!=13
-    );
-
-
-
-    inicializar(juego);
-    while(c<10){
-        system("cls");
-        muestra(juego);
-        scanf("%c", &x);
-        _flushall();
-        busqueda(palabra, juego, x);
-        c++;
-    }
-
+	
+	char palabra[10];
+	char juego[10];
+	char x, pal;
+	int c=0;
+	
+	printf("Ingresar palabra digito por digito(. para finalizar): ");
+	
+	int j=0, i=0;
+	
+while(pal!='.')
+	{
+	scanf("%c",&pal);
+	
+    	if(pal != '.')
+		{
+		_flushall();
+        palabra[i]=pal;
+	    i++;
+        j++;
+    	}
+	}
+	
+	
+	inicializar(juego,j);
+	while(c<10)
+	{
+		system("cls");
+		muestra(juego,j);
+		scanf("%c", &x);
+		_flushall();
+		busqueda(palabra, juego, x);
+		c++;
+	}
+	
 }
 
-void inicializar(char jue[]){
-    for(int i=0; i<6; i++){
-        jue[i] = ''; 
-    }
+
+void inicializar(char jue[], int longitud)
+{
+	for(int i=0; i<longitud; i++){
+		jue[i] = '_'; 
+	}
 }
 
-void muestra(char v[]){
-    for(int i=0; i<6; i++){
-        printf("%c", v[i]); 
-    }
+
+void muestra(char v[],int longitud)
+{
+	for(int i=0; i<longitud; i++){
+		printf("%c", v[i]); 
+	}
 }
 
-void busqueda(char pa[], char jue[], char x){
-    for(int i=0; i<6; i++){
-        if (pa[i] == x) jue[i] = x;
-    }
+
+void busqueda(char pa[], char jue[], char x)
+{
+	for(int i=0; i<6; i++){
+		if (pa[i] == x) jue[i] = x;
+	}
 }
