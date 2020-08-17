@@ -58,7 +58,7 @@ void muestra(char v[],int longitud,char juego[])
 	for(int i=0; i<longitud; i++){
 		printf("%c \n", v[i]);
 	}
-	switch(){
+	switch{
 
 	case 1:	printf("tienes: cabeza"); 
 	break;
