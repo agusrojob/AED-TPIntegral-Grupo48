@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 void inicializar(char jue[], int longitud);
-void muestra(char v[], int longitud);
-void busqueda(char pa[], char jue[], char x);
+void muestra(char v[], int longitud, int c);
+int busqueda(int cantidad, char pa[], char jue[], char x, int &intentos);
 
 
 main(){
@@ -32,16 +33,21 @@ while(pal!='.')
 	
 	
 	inicializar(juego,j);
-	while(c<11)
-	{
-		system("cls");
-		muestra(juego,j);
-		scanf("%c", &x);
-		_flushall();
-		busqueda(palabra, juego, x);
-		c++;
-	}
 	
+	int	error=0;
+	
+	do
+	{
+		system("cls");		
+		muestra(juego, i, c);
+		_flushall();
+		scanf("%c", &x);	
+		if (busqueda(i, palabra, juego, x, c) == 0) break;
+	}while(c<11);
+	
+	muestra(juego, i, c);
+	printf("su puntaje es de %d", 50-(2*c));
+	system("pause");
 }
 
 
@@ -53,41 +59,55 @@ void inicializar(char jue[], int longitud)
 }
 
 
-void muestra(char v[],int longitud,char juego[])
+void muestra(char v[],int longitud,int c)
 {
 	for(int i=0; i<longitud; i++){
-		printf("%c \n", v[i]);
+		v[i]=toupper(v[i]);
+		printf("%c", v[i]);
 	}
-	switch{
+	switch(c){
 
 	case 1:	printf("tienes: cabeza"); 
 	break;
 	case 2:	printf("tienes: cabeza y tronco"); 
 	break;
-	case 3:	printf("tienes: cabeza, tronco y brazo izquierdo");
+	case 3:	printf("\ntienes: cabeza, tronco y brazo izquierdo\n");
 	break;
-	case 4:	printf("tienes: cabeza, tronco, brazo izquierdo y brazo derecho"); 
+	case 4:	printf("\ntienes: cabeza, tronco, brazo izquierdo y brazo derecho\n"); 
 	break;
-	case 5:	printf("tienes: cabeza, tronco, brazo izquierdo, mano izquierda y brazo derecho");
+	case 5:	printf("\ntienes: cabeza, tronco, brazo izquierdo, mano izquierda y brazo derecho\n");
 	break;
-	case 6:	printf("tienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho y mano derecha"); 
+	case 6:	printf("\ntienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho y mano derecha\n"); 
 	break;
-	case 7:	printf("tienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha y pierna izquierda"); 
+	case 7:	printf("\ntienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha y pierna izquierda\n"); 
 	break;
-	case 8:	printf("tienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha, pierna izquierda y pierna derecha");
+	case 8:	printf("\ntienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha, pierna izquierda y pierna derecha\n");
 	break;
-	case 9:	printf("tienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha, pierna izquierda, pierna derecha y pie izquierdo"); 
+	case 9:	printf("\ntienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha, pierna izquierda, pierna derecha y pie izquierdo\n"); 
 	break;
-	case 10: printf("tienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha, pierna izquierda, pierna derecha, pie izquierdo y pie derecho");
+	case 10: printf("\ntienes: cabeza, tronco, brazo izquierdo, mano izquierda, brazo derecho, mano derecha, pierna izquierda, pierna derecha, pie izquierdo y pie derecho\n");
 	break;
 	}
 }
 
 
-void busqueda(char pa[], char jue[], char x)
+int busqueda(int cantidad, char pa[], char jue[], char x, int &intentos)
 {
-	for(int i=0; i<6; i++){
-		if (pa[i] == x) jue[i] = x;
+	bool b = false;
+	int cont=0;
+	for(int i=0; i<cantidad; i++){
+		if (pa[i] == x){
+		 jue[i] = x;
+		 b = true;
+		}
+		if (jue[i] == '_')cont++;
 	}
+	
+	
+		if (!b){
+			intentos++;
+			printf("\nLa letra ingresada no se encuentra en la palabra, pruebe otra.");
+			system("pause");
+		}
+	return cont;
 }
-
